@@ -6,7 +6,6 @@ import pandas as pd
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
     page_title="Medical Cost Predictor",
-    page_icon="🏥",
     layout="wide"
 )
 
@@ -18,7 +17,7 @@ st.markdown("""
 /* Main background */
 .stApp {
     background-color: #F4F7FA;
-    color: #102A43;
+    color: #FFFFFF;
 }
 
 .block-container {
