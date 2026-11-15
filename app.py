@@ -13,8 +13,11 @@ st.set_page_config(
 # ---------------- CUSTOM CSS ----------------
 st.markdown("""
 <style>
+
+/* Main background */
 .stApp {
-    background-color: #F5F8FC;
+    background-color: #F4F7FA;
+    color: #102A43;
 }
 
 .block-container {
@@ -23,62 +26,103 @@ st.markdown("""
     max-width: 1150px;
 }
 
+/* Header */
 .header {
-    background: linear-gradient(120deg, #123B59, #167D91);
+    background: linear-gradient(120deg, #123047, #087F75);
     padding: 35px;
     border-radius: 18px;
-    color: white;
     margin-bottom: 25px;
 }
 
 .header h1 {
-    color: white;
+    color: #FFFFFF !important;
     font-size: 34px;
     margin-bottom: 8px;
 }
 
 .header p {
-    color: #E2F3F7;
+    color: #FFFFFF !important;
     font-size: 16px;
 }
 
-.metric-card {
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
-    border: 1px solid #E2EAF0;
-    text-align: center;
-}
-
-.metric-title {
-    color: #718096;
-    font-size: 14px;
-}
-
-.metric-value {
-    color: #123B59;
-    font-size: 27px;
+/* Main headings */
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4,
+.section-title {
+    color: #102A43 !important;
     font-weight: 700;
 }
 
+/* Normal text */
+.stApp p,
+.stApp .stMarkdown {
+    color: #1F2937;
+}
+
+/* Input labels */
+.stSlider label,
+.stRadio label,
+.stSelectbox label {
+    color: #102A43 !important;
+    font-weight: 700 !important;
+}
+
+/* Radio button options */
+.stRadio div[role="radiogroup"] label p {
+    color: #1F2937 !important;
+}
+
+/* Dropdown text */
+.stSelectbox div[data-baseweb="select"] * {
+    color: #102A43 !important;
+}
+
+/* Dropdown background */
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #FFFFFF;
+}
+
+/* Slider values */
+.stSlider [data-testid="stThumbValue"] {
+    color: #102A43 !important;
+}
+
+/* Input section cards */
 .section-card {
-    background: white;
+    background: #FFFFFF;
     padding: 25px;
     border-radius: 16px;
-    border: 1px solid #E2EAF0;
+    border: 1px solid #D5E0E8;
     margin-bottom: 20px;
 }
 
 .section-title {
-    color: #123B59;
     font-size: 21px;
-    font-weight: 700;
     margin-bottom: 15px;
 }
 
+/* Prediction button */
+div.stButton > button {
+    background-color: #087F75;
+    color: #FFFFFF !important;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 17px;
+    font-weight: 700;
+    width: 100%;
+}
+
+div.stButton > button:hover {
+    background-color: #06645D;
+    color: #FFFFFF !important;
+}
+
+/* Prediction result */
 .result-card {
-    background: #E6F6F3;
-    border: 1px solid #B8E5DC;
+    background: #087F75;
     padding: 30px;
     border-radius: 16px;
     text-align: center;
@@ -86,32 +130,27 @@ st.markdown("""
 }
 
 .result-label {
-    color: #287A70;
-    font-size: 16px;
+    color: #FFFFFF !important;
+    font-size: 18px;
 }
 
 .result-value {
-    color: #11695D;
-    font-size: 38px;
+    color: #FFFFFF !important;
+    font-size: 40px;
     font-weight: 800;
 }
 
-div.stButton > button {
-    background-color: #147D78;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 17px;
-    font-weight: 600;
-    width: 100%;
+.result-card p {
+    color: #FFFFFF !important;
 }
 
-div.stButton > button:hover {
-    background-color: #0E625E;
-    color: white;
+/* Captions */
+.stCaption,
+.stCaption p {
+    color: #374151 !important;
 }
 
+/* Footer */
 footer {
     visibility: hidden;
 }
@@ -119,11 +158,14 @@ footer {
 #MainMenu {
     visibility: hidden;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
+
 # ---------------- LOAD MODEL ----------------
 model = joblib.load('medical_cost_model.pkl')
+
 
 # ---------------- HEADER ----------------
 st.markdown("""
@@ -136,42 +178,41 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---------------- MODEL METRICS ----------------
-st.markdown("### Model Performance")
-
-m1, m2 = st.columns(2)
-
-with m1:
-    st.markdown("""
-    <div class="metric-card">
-        <div class="metric-title">R² Score</div>
-        <div class="metric-value">0.8871</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with m2:
-    st.markdown("""
-    <div class="metric-card">
-        <div class="metric-title">Mean Absolute Error</div>
-        <div class="metric-value">$2,830</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.write("")
 
 # ---------------- INPUT FORM ----------------
 st.markdown("### Enter Your Information")
-st.write("Provide the following details to estimate medical costs.")
+
+st.write(
+    "Provide the following details to estimate your medical costs."
+)
 
 col1, col2 = st.columns(2, gap="large")
 
-with col1:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">👤 Personal Information</div>',
-                unsafe_allow_html=True)
 
-    age = st.slider("Age", 18, 64, 30)
-    sex = st.radio("Sex", ["male", "female"], horizontal=True)
+# ---------------- PERSONAL INFORMATION ----------------
+with col1:
+
+    st.markdown(
+        '<div class="section-card">',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="section-title">👤 Personal Information</div>',
+        unsafe_allow_html=True
+    )
+
+    age = st.slider(
+        "Age",
+        18, 64, 30
+    )
+
+    sex = st.radio(
+        "Sex",
+        ["male", "female"],
+        horizontal=True
+    )
+
     region = st.selectbox(
         "Residential Region",
         ["northeast", "northwest", "southeast", "southwest"]
@@ -179,16 +220,38 @@ with col1:
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-with col2:
-    st.markdown('<div class="section-card">', unsafe_allow_html=True)
-    st.markdown('<div class="section-title">🩺 Health Information</div>',
-                unsafe_allow_html=True)
 
-    bmi = st.slider("Body Mass Index (BMI)", 15.0, 53.0, 25.0)
-    children = st.selectbox("Number of Children", [0, 1, 2, 3, 4, 5])
-    smoker = st.radio("Smoking Status", ["no", "yes"], horizontal=True)
+# ---------------- HEALTH INFORMATION ----------------
+with col2:
+
+    st.markdown(
+        '<div class="section-card">',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="section-title">🩺 Health Information</div>',
+        unsafe_allow_html=True
+    )
+
+    bmi = st.slider(
+        "Body Mass Index (BMI)",
+        15.0, 53.0, 25.0
+    )
+
+    children = st.selectbox(
+        "Number of Children",
+        [0, 1, 2, 3, 4, 5]
+    )
+
+    smoker = st.radio(
+        "Smoking Status",
+        ["no", "yes"],
+        horizontal=True
+    )
 
     st.markdown('</div>', unsafe_allow_html=True)
+
 
 # ---------------- PREDICTION ----------------
 st.write("")
@@ -228,24 +291,31 @@ if st.button("Calculate Estimated Medical Cost"):
         'is_smoker': 1 if smoker == 'yes' else 0
     }])
 
-    # Predict
+    # Predict medical cost
     pred = model.predict(data)[0]
 
-    # Display result
+    # Display prediction result
     st.markdown(f"""
     <div class="result-card">
-        <div class="result-label">Estimated Medical Cost</div>
-        <div class="result-value">${pred:,.2f}</div>
-        <p style="color:#287A70;">
-            Your estimated medical insurance expense
+        <div class="result-label">
+            YOUR ESTIMATED MEDICAL COST
+        </div>
+
+        <div class="result-value">
+            ${pred:,.2f}
+        </div>
+
+        <p>
+            Estimated insurance expense based on your information
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     st.caption(
-        "This is an ML-based estimate, not an actual insurance quote "
-        "or medical assessment."
+        "This is an ML-based estimate, not an actual insurance "
+        "quote or medical assessment."
     )
+
 
 # ---------------- FOOTER ----------------
 st.write("")
@@ -253,7 +323,7 @@ st.divider()
 
 st.markdown("""
 <center>
-    <p style="color:#718096; font-size:13px;">
+    <p style="color:#1F2937; font-size:13px;">
         Developed by H.M.D.N. Herath (SA25610046)
         <br>
         Powered by Machine Learning | Linear Regression
