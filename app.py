@@ -46,12 +46,11 @@ st.markdown("""
 }
 
 /* Main headings */
-.stApp h1,
 .stApp h2,
 .stApp h3,
 .stApp h4,
 .section-title {
-    color: #FFFFFF !important;
+    color: #102A43 !important;
     font-weight: 700;
 }
 
