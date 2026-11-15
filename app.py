@@ -51,7 +51,7 @@ st.markdown("""
 .stApp h3,
 .stApp h4,
 .section-title {
-    color: #102A43 !important;
+    color: #FFFFFF !important;
     font-weight: 700;
 }
 
